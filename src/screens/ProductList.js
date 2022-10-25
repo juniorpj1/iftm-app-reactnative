@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { FlatList, StyleSheet } from "react-native";
 import { Product } from "../components/Product.js";
 import { getProducts } from "../services/productsService.js";

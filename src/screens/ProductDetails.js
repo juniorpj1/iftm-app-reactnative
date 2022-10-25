@@ -9,14 +9,11 @@ import {
   StyleSheet,
 } from "react-native";
 import { getProduct } from "../services/productsService";
-import { CartContext } from "../components/CartContext";
 import { numberFormat } from "../services/numberFormat";
 
-export const ProductDetails = ({ route }) => {
+export const ProductDetails = ({ route, addItemToCart }) => {
   const { productId } = route.params;
   const [product, setProduct] = useState({});
-
-  const { addItemToCart } = useContext(CartContext);
 
   useEffect(() => {
     setProduct(getProduct(productId));

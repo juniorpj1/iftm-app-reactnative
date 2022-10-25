@@ -1,20 +1,13 @@
-import { useEffect, useState, useContext } from "react";
-import { View, Text, Button, FlatList, StyleSheet } from "react-native";
-import { CartContext } from "../components/CartContext";
+import { useEffect, useState } from "react";
+import { View, Text, FlatList, StyleSheet } from "react-native";
 import { numberFormat } from "../services/numberFormat";
 
-export const Cart = ({ navigation }) => {
-  const { items, getItemsCount, getTotalPrice } = useContext(CartContext);
-
+export const Cart = ({ items, getTotalPrice }) => {
   const Totals = () => {
-    let [total, setTotal] = useState(0);
-    useEffect(() => {
-      setTotal(getTotalPrice());
-    });
     return (
       <View style={styles.cartLineTotal}>
         <Text style={[styles.lineLeft, styles.lineTotal]}>Total</Text>
-        <Text style={styles.lineRight}>{numberFormat(total)}</Text>
+        <Text style={styles.lineRight}>{numberFormat(getTotalPrice())}</Text>
       </View>
     );
   };
@@ -25,7 +18,7 @@ export const Cart = ({ navigation }) => {
         <Text style={styles.lineLeft}>
           {item.product.name} x {item.qty}
         </Text>
-        <Text style={styles.lineRight}>{numberFormat(item.totalPrice)}</Text>
+        <Text style={styles.lineRight}>{numberFormat(item.product.price * item.qty)}</Text>
       </View>
     );
   };

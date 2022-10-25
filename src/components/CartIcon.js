@@ -1,9 +1,7 @@
-import { useContext } from "react";
 import { View, Text, StyleSheet } from "react-native";
-import { CartContext } from "../components/CartContext";
 
-export const CartIcon = ({ navigation }) => {
-  const { getItemsCount } = useContext(CartContext);
+export const CartIcon = ({ navigation, getItemsCount }) => {
+  const quantidade = getItemsCount();
   return (
     <View style={styles.container}>
       <Text
@@ -12,7 +10,7 @@ export const CartIcon = ({ navigation }) => {
           navigation.navigate("Cart");
         }}
       >
-        Carrinho ({getItemsCount()})
+        Carrinho({quantidade})
       </Text>
     </View>
   );
