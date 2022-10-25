@@ -10,7 +10,7 @@ const PRODUCTS = [
   {
     id: 101,
     name: "Power Bank",
-    price: 60,
+    price: 60.99,
     image: require("../../assets/products/power-bank.jpg"),
     description: "Belkin BPB006BT USB-C 10000mAh Power Bank",
   },
