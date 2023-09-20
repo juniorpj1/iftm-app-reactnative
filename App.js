@@ -1,12 +1,12 @@
-import { StyleSheet } from "react-native";
-import { NavigationContainer } from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { ProductsList } from "./src/screens/ProductList";
-import { ProductDetails } from "./src/screens/ProductDetails";
-import { Cart } from "./src/screens/Cart";
-import { CartIcon } from "./src/components/CartIcon";
-import { useState } from "react";
-import { getProduct } from "./src/services/productsService";
+import React, { useState } from 'react';
+import { StyleSheet } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { ProductsList } from './src/screens/ProductList';
+import { ProductDetails } from './src/screens/ProductDetails';
+import Cart from './src/screens/Cart';
+import { CartIcon } from './src/components/CartIcon';
+import { getProduct } from './src/services/productsService';
 
 const App = () => {
   const Stack = createNativeStackNavigator();
@@ -15,7 +15,7 @@ const App = () => {
   const addItemToCart = (id) => {
     const product = getProduct(id);
     setItensCarrinho((prevItems) => {
-      const item = prevItems.find((item) => item.id == id);
+      const item = prevItems.find((item) => item.id === id);
       if (!item) {
         return [
           ...prevItems,
@@ -27,13 +27,17 @@ const App = () => {
         ];
       } else {
         return prevItems.map((item) => {
-          if (item.id == id) {
+          if (item.id === id) {
             item.qty++;
           }
           return item;
         });
       }
     });
+  };
+
+  const clearCart = () => {
+    setItensCarrinho([]);
   };
 
   const getItemsCount = () => {
@@ -51,7 +55,7 @@ const App = () => {
           name="Products"
           component={ProductsList}
           options={({ navigation }) => ({
-            title: "Produtos",
+            title: 'Produtos',
             headerTitleStyle: styles.headerTitle,
             headerRight: () => <CartIcon navigation={navigation} getItemsCount={getItemsCount} />,
           })}
@@ -59,7 +63,7 @@ const App = () => {
         <Stack.Screen
           name="ProductDetails"
           options={({ navigation }) => ({
-            title: "Detalhes do produto",
+            title: 'Detalhes do produto',
             headerTitleStyle: styles.headerTitle,
             headerRight: () => <CartIcon navigation={navigation} getItemsCount={getItemsCount} />,
           })}
@@ -69,12 +73,19 @@ const App = () => {
         <Stack.Screen
           name="Cart"
           options={({ navigation }) => ({
-            title: "Meu carrinho",
+            title: 'Meu carrinho',
             headerTitleStyle: styles.headerTitle,
             headerRight: () => <CartIcon navigation={navigation} getItemsCount={getItemsCount} />,
           })}
         >
-          {(props) => <Cart {...props} items={itensCarrinho} getTotalPrice={getTotalPrice} />}
+          {(props) => (
+            <Cart
+              {...props}
+              items={itensCarrinho}
+              getTotalPrice={getTotalPrice}
+              clearCart={clearCart} // Passe a função clearCart para o componente Cart
+            />
+          )}
         </Stack.Screen>
       </Stack.Navigator>
     </NavigationContainer>
